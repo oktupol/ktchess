@@ -17,4 +17,6 @@ data class Move(
         val myFlags = this.flags as HashMap
         for (flag in flags) myFlags[flag] = true
     }
+
+    fun has(flag: String) = flags.getOrDefault(flag, false)
 }

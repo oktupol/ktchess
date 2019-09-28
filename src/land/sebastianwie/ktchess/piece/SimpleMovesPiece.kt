@@ -17,7 +17,7 @@ abstract class SimpleMovesPiece(player: Player, board: Board) : AbstractPiece(pl
         }
     }
 
-    override fun getMoves(): Set<Move> {
+    override fun getMovesWithoutCheckTests(): MutableSet<Move> {
         val moves = HashSet<Move>()
 
         for (distance in 1..maxMoveDistance) {
