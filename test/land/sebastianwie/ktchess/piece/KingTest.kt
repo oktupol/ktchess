@@ -217,7 +217,7 @@ internal class KingTest {
     @Test
     fun testGetMovesWithCastle_kingInCheck() {
         val expectation = ("" +
-                "R..xKx..|" +
+                "R..xKx.R|" +
                 "...x.x..|" +
                 "........|" +
                 "....r...|" +
@@ -228,6 +228,7 @@ internal class KingTest {
 
         board.setPieceAt(4, 0, king)
         board.setPieceAt(0, 0, Rook(king.player, board))
+        board.setPieceAt(7, 0, Rook(king.player, board))
         board.setPieceAt(4, 3, Rook(king.player.opponent(), board))
 
         assertEquals(expectation, board.show(king.getMoves()))
@@ -236,7 +237,7 @@ internal class KingTest {
     @Test
     fun testGetMovesWithCastle_kingWouldMoveThroughCheck() {
         val expectation = ("" +
-                "R...Kx..|" +
+                "R...KxxR|" +
                 "....xx..|" +
                 "........|" +
                 "...r....|" +
@@ -247,6 +248,7 @@ internal class KingTest {
 
         board.setPieceAt(4, 0, king)
         board.setPieceAt(0, 0, Rook(king.player, board))
+        board.setPieceAt(7, 0, Rook(king.player, board))
         board.setPieceAt(3, 3, Rook(king.player.opponent(), board))
 
         assertEquals(expectation, board.show(king.getMoves()))

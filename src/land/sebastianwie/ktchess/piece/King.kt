@@ -58,7 +58,7 @@ class King(player: Player, board: Board) : SimpleMovesPiece(player, board) {
                 simulation.deletePiece(king)
                 simulation.setPieceAt(interimY, player.baseRow, king)
 
-                if (simulation.isCheck(player)) break@castlingOptions
+                if (simulation.isCheck(player)) continue@castlingOptions
             }
 
             val targetCoordinates = Coordinates(coordinates.x + castlingOption.dx, coordinates.y)
