@@ -7,7 +7,7 @@ import land.sebastianwie.ktchess.piece.Piece
 import kotlin.reflect.full.primaryConstructor
 
 class Board {
-    private val fields = Array(8) { y -> Array(8) { x -> Field(Coordinates(x, y), this) } }
+    internal val fields = Array(8) { y -> Array(8) { x -> Field(Coordinates(x, y), this) } }
 
     fun getFieldAt(x: Int, y: Int) = getFieldAt(Coordinates(x, y))
     fun getFieldAt(coordinates: Coordinates) = fields[coordinates.y][coordinates.x]
@@ -49,16 +49,17 @@ class Board {
     }
 
     private fun getPiecesOf(player: Player) = getPieces().filter { piece -> piece.player == player }
-    private fun getKingOf(player: Player) = getPieces().first { piece ->
+    fun getKingOf(player: Player): King? = getPieces().firstOrNull { piece ->
         piece is King && piece.player == player
-    } as King
+    } as King?
 
     fun isCheck(player: Player): Boolean {
-        val king = getKingOf(player)
+        val king = getKingOf(player) ?: return false
+
         val opponentPieces = getPiecesOf(player.opponent())
 
         for (opponentPiece in opponentPieces) {
-            for (move in opponentPiece.getMoves()) {
+            for (move in opponentPiece.getMovesWithoutCheckTests()) {
                 if (move.capturedPiece == king) return true
             }
         }
@@ -90,7 +91,7 @@ class Board {
         return true
     }
 
-    private fun clone(): Board {
+    fun clone(): Board {
         val clone = Board()
 
         for ((y, row) in fields.withIndex()) {

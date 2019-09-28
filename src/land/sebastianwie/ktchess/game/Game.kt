@@ -1,11 +1,12 @@
 package land.sebastianwie.ktchess.game
 
 import land.sebastianwie.ktchess.board.Board
+import land.sebastianwie.ktchess.board.Coordinates
 import land.sebastianwie.ktchess.piece.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
-object Game {
+class Game(init: Boolean = true) {
     val board = Board()
 
     var currentPlayer = Player.WHITE
@@ -37,10 +38,12 @@ object Game {
     )
 
     init {
-        initHomeRow(Player.WHITE)
-        initHomeRow(Player.BLACK)
-        initSecondRow(Player.WHITE)
-        initSecondRow(Player.BLACK)
+        if (init) {
+            initHomeRow(Player.WHITE)
+            initHomeRow(Player.BLACK)
+            initSecondRow(Player.WHITE)
+            initSecondRow(Player.BLACK)
+        }
     }
 
     private fun initHomeRow(player: Player) {
@@ -54,6 +57,21 @@ object Game {
         for (x in 0..7) {
             board.setPieceAt(x, player.baseRow + player.direction, Pawn(player, board))
         }
+    }
+
+    class Selection internal constructor(val piece: Piece) {
+        fun getMoves(): Set<Move> = piece.getMoves()
+        fun moveTo(coordinates: Coordinates) {
+            piece.move(coordinates)
+        }
+    }
+
+    fun select(coordinates: Coordinates): Selection {
+        val piece = board.getPieceAt(coordinates)
+        requireNotNull(piece) { "No piece selected" }
+        require(piece.player == currentPlayer) { "Opponent piece selected" }
+
+        return Selection(piece)
     }
 
     fun endTurn() {

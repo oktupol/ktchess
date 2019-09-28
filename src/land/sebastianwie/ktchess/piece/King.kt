@@ -32,25 +32,33 @@ class King(player: Player, board: Board) : SimpleMovesPiece(player, board) {
     }
 
     override fun getMovesWithoutCheckTests(): MutableSet<Move> {
-        val moves = super.getMoves()
+        val moves = super.getMovesWithoutCheckTests()
 
-        addCastleMoves(moves as MutableSet<Move>)
+        addCastleMoves(moves)
 
         return moves
     }
 
     private fun addCastleMoves(moves: MutableSet<Move>) {
         if (moved) return
+        if (board.isCheck(player)) return
 
         castlingOptions@ for (castlingOption in CastlingOption.values()) {
-            val rook = board.getPieceAt(castlingOption.x, player.baseRow) ?: break
-            if (rook !is Rook) break
-            if (rook.player != player) break
-            if (rook.moved) break
+            val rook = board.getPieceAt(castlingOption.x, player.baseRow) ?: continue
+            if (rook !is Rook) continue
+            if (rook.player != player) continue
+            if (rook.moved) continue
+
+            val simulation = board.clone()
+            val king = simulation.getKingOf(player)!!
 
             for (interimY in castlingOption.betweenSpaceStart..castlingOption.betweenSpaceEnd) {
-                if (board.getPieceAt(interimY, player.baseRow) != null) break@castlingOptions
-                // todo check if king is currently not in check or would be in any space between its current and its final position
+                if (board.getPieceAt(interimY, player.baseRow) != null) continue@castlingOptions
+
+                simulation.deletePiece(king)
+                simulation.setPieceAt(interimY, player.baseRow, king)
+
+                if (simulation.isCheck(player)) break@castlingOptions
             }
 
             val targetCoordinates = Coordinates(coordinates.x + castlingOption.dx, coordinates.y)

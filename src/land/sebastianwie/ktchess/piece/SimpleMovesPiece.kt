@@ -10,20 +10,21 @@ abstract class SimpleMovesPiece(player: Player, board: Board) : AbstractPiece(pl
     abstract val canMoveDiagonally: Boolean
     open val maxMoveDistance = 8
 
-    private val directions = Array(3) { i ->
-        BooleanArray(3) { j ->
-            canMoveOrthogonally && (i == 0 && j != 0 || i != 0 && j == 0)
-                    || canMoveDiagonally && i != 0 && j != 0
-        }
-    }
 
     override fun getMovesWithoutCheckTests(): MutableSet<Move> {
         val moves = HashSet<Move>()
 
+        val directions = Array(3) { i ->
+            BooleanArray(3) { j ->
+                canMoveOrthogonally && (i == 1 && j != 1 || i != 1 && j == 1)
+                        || canMoveDiagonally && i != 1 && j != 1
+            }
+        }
+
         for (distance in 1..maxMoveDistance) {
             for (dx in intArrayOf(-distance, 0, distance)) {
                 for (dy in intArrayOf(-distance, 0, distance)) {
-                    if (!directions[sign(dx)][sign(dy)]) continue
+                    if (!directions[sign(dx) + 1][sign(dy) + 1]) continue
 
                     val targetX = this.coordinates.x + dx
                     val targetY = this.coordinates.y + dy
@@ -42,12 +43,12 @@ abstract class SimpleMovesPiece(player: Player, board: Board) : AbstractPiece(pl
 
                     if (capturedPiece.player == player.opponent()) {
                         moves.add(Move(this, targetCoords, capturedPiece))
-                        directions[sign(dx)][sign(dy)] = false
+                        directions[sign(dx) + 1][sign(dy) + 1] = false
                         continue
                     }
 
                     if (capturedPiece.player == player) {
-                        directions[sign(dx)][sign(dy)] = false
+                        directions[sign(dx) + 1][sign(dy) + 1] = false
                         continue
                     }
                 }
