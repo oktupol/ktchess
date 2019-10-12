@@ -18,14 +18,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_initialPosition() {
 		val expectation = ("" +
-				"........|" +
-				"..P.....|" +
-				"..x.....|" +
-				"..x.....|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"..P.....|" +
+			"..x.....|" +
+			"..x.....|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(2, 1, piece)
 
@@ -35,14 +35,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_whitePawnInitialPosition() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"..x.....|" +
-				"..x.....|" +
-				"..p.....|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"..x.....|" +
+			"..x.....|" +
+			"..p.....|" +
+			"........").replace('|', '\n')
 
 		val whitePawn = Pawn(Player.WHITE, board)
 		board.setPieceAt(2, 6, whitePawn)
@@ -53,14 +53,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_afterOneMove() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"..P.....|" +
-				"..x.....|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"..P.....|" +
+			"..x.....|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(2, 1, piece)
 		piece.move(Coordinates(2, 2))
@@ -71,14 +71,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_opponentInFront() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"..P.....|" +
-				"..p.....|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"..P.....|" +
+			"..p.....|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(2, 1, piece)
 		board.setPieceAt(2, 3, Pawn(Player.WHITE, board))
@@ -90,14 +90,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_initialPositionAndOpponentDiagonallyAhead() {
 		val expectation = ("" +
-				"........|" +
-				"..P.....|" +
-				"..xX....|" +
-				"..x.....|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"..P.....|" +
+			"..xX....|" +
+			"..x.....|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(2, 1, piece)
 		board.setPieceAt(3, 2, Pawn(Player.WHITE, board))
@@ -108,14 +108,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_nextToOpponentPawn() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"...Pp...|" +
-				"...x....|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"...Pp...|" +
+			"...x....|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(3, 3, piece)
 		piece.move(Coordinates(3, 4))
@@ -128,14 +128,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_nextToOpponentPawnThatMovedDouble() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"...Pp...|" +
-				"...xX...|" + // en passant move - the white pawn would be captured
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"...Pp...|" +
+			"...xX...|" + // en passant move - the white pawn would be captured
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(3, 3, piece)
 		piece.move(Coordinates(3, 4))
@@ -150,14 +150,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_nextToOpponentPawnThatMovedDoubleMoreThanOneMoveAgo() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"...Pp...|" +
-				"...x....|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"........|" +
+			"...Pp...|" +
+			"...x....|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(3, 2, piece)
 		val opponentPawn = Pawn(Player.WHITE, board)
@@ -174,14 +174,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_kingInCheck_mustCapturePiece() {
 		val expectation = ("" +
-				"...K....|" +
-				"....P...|" +
-				"...X....|" +
-				"........|" +
-				"........|" +
-				"...q....|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"...K....|" +
+			"....P...|" +
+			"...X....|" +
+			"........|" +
+			"........|" +
+			"...q....|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 1, piece)
 		board.setPieceAt(3, 0, King(Player.BLACK, board))
@@ -194,14 +194,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_kingInCheck_mustMoveDouble() {
 		val expectation = ("" +
-				"........|" +
-				"..P.....|" +
-				"...p....|" +
-				"K.x..r..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"..P.....|" +
+			"...p....|" +
+			"K.x..r..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(2, 1, piece)
 		board.setPieceAt(3, 2, Pawn(Player.WHITE, board))
@@ -214,14 +214,14 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@Test
 	fun testGetMoves_kingInCheck_cannotMove() {
 		val expectation = ("" +
-				"........|" +
-				"..P.....|" +
-				"...p....|" +
-				"........|" +
-				"........|" +
-				".K....r.|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"..P.....|" +
+			"...p....|" +
+			"........|" +
+			"........|" +
+			".K....r.|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(2, 1, piece)
 		board.setPieceAt(3, 2, Pawn(Player.WHITE, board))

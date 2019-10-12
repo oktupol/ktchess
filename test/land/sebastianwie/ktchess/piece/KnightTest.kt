@@ -18,14 +18,14 @@ internal class KnightTest : AbstractPieceTest<Knight>() {
 	@Test
 	fun testGetMoves() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"...x.x..|" +
-				"..x...x.|" +
-				"....N...|" +
-				"..x...x.|" +
-				"...x.x..|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"...x.x..|" +
+			"..x...x.|" +
+			"....N...|" +
+			"..x...x.|" +
+			"...x.x..|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 4, piece)
 
@@ -35,14 +35,14 @@ internal class KnightTest : AbstractPieceTest<Knight>() {
 	@Test
 	fun getMovesWhileCloseToCorner() {
 		val expectation = ("" +
-				"....x...|" +
-				"......N.|" +
-				"....x...|" +
-				".....x.x|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"....x...|" +
+			"......N.|" +
+			"....x...|" +
+			".....x.x|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(6, 1, piece)
 
@@ -52,14 +52,14 @@ internal class KnightTest : AbstractPieceTest<Knight>() {
 	@Test
 	fun getMovesWithOtherPiecesOccupyingFields() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"...X.x..|" +
-				"..x...P.|" +
-				"....N...|" +
-				"..P...x.|" +
-				"...x.X..|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"...X.x..|" +
+			"..x...P.|" +
+			"....N...|" +
+			"..P...x.|" +
+			"...x.X..|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 4, piece)
 
@@ -74,14 +74,14 @@ internal class KnightTest : AbstractPieceTest<Knight>() {
 	@Test
 	fun getMovesWithKingInCheck_moveBetweenOpponentAndKing() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"..r.N...|" +
-				"..x.....|" +
-				"........|" +
-				"..K.....").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"..r.N...|" +
+			"..x.....|" +
+			"........|" +
+			"..K.....").replace('|', '\n')
 
 		board.setPieceAt(4, 4, piece)
 		board.setPieceAt(2, 4, Rook(Player.WHITE, board))
@@ -93,14 +93,14 @@ internal class KnightTest : AbstractPieceTest<Knight>() {
 	@Test
 	fun getMovesWithKingInCheck_capturePiece() {
 		val expectation = ("" +
-				"........|" +
-				".....N..|" +
-				"........|" +
-				"......X.|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"..K.....").replace('|', '\n')
+			"........|" +
+			".....N..|" +
+			"........|" +
+			"......X.|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"..K.....").replace('|', '\n')
 
 		board.setPieceAt(5, 1, piece)
 		board.setPieceAt(6, 3, Bishop(Player.WHITE, board))
@@ -112,14 +112,14 @@ internal class KnightTest : AbstractPieceTest<Knight>() {
 	@Test
 	fun getMovesWithKingInCheck_capturePieceOrMoveInBetween() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"....N...|" +
-				"......X.|" +
-				".....x..|" +
-				"........|" +
-				"........|" +
-				"..K.....").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"....N...|" +
+			"......X.|" +
+			".....x..|" +
+			"........|" +
+			"........|" +
+			"..K.....").replace('|', '\n')
 
 		board.setPieceAt(4, 2, piece)
 		board.setPieceAt(6, 3, Bishop(Player.WHITE, board))
@@ -131,14 +131,14 @@ internal class KnightTest : AbstractPieceTest<Knight>() {
 	@Test
 	fun getMovesWithKingInCheck_noPossibleMoves() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"....N...|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				".rK.....").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"....N...|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			".rK.....").replace('|', '\n')
 
 		board.setPieceAt(4, 2, piece)
 		board.setPieceAt(1, 7, Rook(Player.WHITE, board))

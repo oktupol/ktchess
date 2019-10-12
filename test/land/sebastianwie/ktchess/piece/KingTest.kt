@@ -18,14 +18,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMoves() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"...xxx..|" +
-				"...xKx..|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"...xxx..|" +
+			"...xKx..|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 3, piece)
 
@@ -35,14 +35,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesInCorner() {
 		val expectation = ("" +
-				"......xK|" +
-				"......xx|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"......xK|" +
+			"......xx|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(7, 0, piece)
 
@@ -52,14 +52,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithOpponent() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				".b.xX...|" +
-				"...xK...|" +
-				"....x...|" +
-				"........|" +
-				".....r..|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			".b.xX...|" +
+			"...xK...|" +
+			"....x...|" +
+			"........|" +
+			".....r..|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 3, piece)
 		board.setPieceAt(5, 6, Rook(piece.player.opponent(), board))
@@ -72,14 +72,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithKingsideCastle() {
 		val expectation = ("" +
-				"...xKxxR|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"...xKxxR|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		board.setPieceAt(7, 0, Rook(piece.player, board))
@@ -90,14 +90,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithQueensideCastle() {
 		val expectation = ("" +
-				"R.xxKx..|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"R.xxKx..|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		board.setPieceAt(0, 0, Rook(piece.player, board))
@@ -108,14 +108,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithBothSidesCastle() {
 		val expectation = ("" +
-				"R.xxKxxR|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"R.xxKxxR|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		board.setPieceAt(0, 0, Rook(piece.player, board))
@@ -127,14 +127,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithBothSidesCastle_kingSideRookMoved() {
 		val expectation = ("" +
-				"R.xxKx.R|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"R.xxKx.R|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		val kingsideRook = Rook(piece.player, board)
@@ -150,14 +150,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithBothSidesCastle_queenSideRookMoved() {
 		val expectation = ("" +
-				"R..xKxxR|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"R..xKxxR|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		val queensideRook = Rook(piece.player, board)
@@ -173,14 +173,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithBothSidesCastle_kingMoved() {
 		val expectation = ("" +
-				"R..xKx.R|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"R..xKx.R|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		board.setPieceAt(0, 0, Rook(piece.player, board))
@@ -195,14 +195,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithCastle_castleBlocked() {
 		val expectation = ("" +
-				"RP.xKx..|" +
-				"...xxx..|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"RP.xKx..|" +
+			"...xxx..|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		board.setPieceAt(0, 0, Rook(piece.player, board))
@@ -214,14 +214,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithCastle_kingInCheck() {
 		val expectation = ("" +
-				"R..xKx.R|" +
-				"...x.x..|" +
-				"........|" +
-				"....r...|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"R..xKx.R|" +
+			"...x.x..|" +
+			"........|" +
+			"....r...|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		board.setPieceAt(0, 0, Rook(piece.player, board))
@@ -234,14 +234,14 @@ internal class KingTest : AbstractPieceTest<King>() {
 	@Test
 	fun testGetMovesWithCastle_kingWouldMoveThroughCheck() {
 		val expectation = ("" +
-				"R...KxxR|" +
-				"....xx..|" +
-				"........|" +
-				"...r....|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........").replace('|', '\n')
+			"R...KxxR|" +
+			"....xx..|" +
+			"........|" +
+			"...r....|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 0, piece)
 		board.setPieceAt(0, 0, Rook(piece.player, board))

@@ -22,14 +22,14 @@ internal class BoardExtensionTest {
 	@Test
 	fun testShow() {
 		val expectation = ("" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"..p.....|" +
-				"........|" +
-				"........|" +
-				"....P...|" +
-				"........").replace('|', '\n')
+			"........|" +
+			"........|" +
+			"........|" +
+			"..p.....|" +
+			"........|" +
+			"........|" +
+			"....P...|" +
+			"........").replace('|', '\n')
 		board.getFieldAt(2, 3).piece = Pawn(Player.WHITE, board)
 		board.getFieldAt(4, 6).piece = Pawn(Player.BLACK, board)
 
@@ -39,14 +39,14 @@ internal class BoardExtensionTest {
 	@Test
 	fun testShowWithMoves() {
 		val expectation = ("" +
-				"....x...|" +
-				"....x...|" +
-				"....x...|" +
-				"..Xxrxxx|" +
-				"....x...|" +
-				"....x...|" +
-				"....p...|" +
-				"........").replace('|', '\n')
+			"....x...|" +
+			"....x...|" +
+			"....x...|" +
+			"..Xxrxxx|" +
+			"....x...|" +
+			"....x...|" +
+			"....p...|" +
+			"........").replace('|', '\n')
 
 		board.setPieceAt(4, 3, Rook(Player.WHITE, board))
 		board.setPieceAt(4, 6, Pawn(Player.WHITE, board))
@@ -58,14 +58,14 @@ internal class BoardExtensionTest {
 	@Test
 	fun testLoad() {
 		val pattern = ("" +
-				"RNBQKBNR|" +
-				"PPPPPPPP|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"........|" +
-				"pppppppp|" +
-				"rnbqkbnr").replace('|', '\n')
+			"RNBQKBNR|" +
+			"PPPPPPPP|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"pppppppp|" +
+			"rnbqkbnr").replace('|', '\n')
 
 		board.load(pattern)
 

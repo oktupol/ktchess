@@ -17,7 +17,7 @@ abstract class SimpleMovesPiece(player: Player, board: Board) : AbstractPiece(pl
 		val directions = Array(3) { i ->
 			BooleanArray(3) { j ->
 				canMoveOrthogonally && (i == 1 && j != 1 || i != 1 && j == 1)
-						|| canMoveDiagonally && i != 1 && j != 1
+					|| canMoveDiagonally && i != 1 && j != 1
 			}
 		}
 
