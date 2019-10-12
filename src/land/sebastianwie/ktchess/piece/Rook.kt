@@ -6,16 +6,16 @@ import land.sebastianwie.ktchess.game.Move
 import land.sebastianwie.ktchess.game.Player
 
 class Rook(player: Player, board: Board) : SimpleMovesPiece(player, board) {
-    override val canMoveDiagonally = false
-    override val canMoveOrthogonally = true
+	override val canMoveDiagonally = false
+	override val canMoveOrthogonally = true
 
-    internal var moved = false
+	internal var moved = false
 
-    override fun move(coordinates: Coordinates): Move {
-        val move = super.move(coordinates)
+	override fun move(coordinates: Coordinates): Move {
+		val move = super.move(coordinates)
 
-        moved = true
+		moved = true
 
-        return move
-    }
+		return move
+	}
 }

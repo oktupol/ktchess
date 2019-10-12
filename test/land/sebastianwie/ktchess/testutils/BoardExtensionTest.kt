@@ -12,66 +12,66 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
 
 internal class BoardExtensionTest {
-    lateinit var board: Board
+	lateinit var board: Board
 
-    @BeforeEach
-    fun setUp() {
-        board = Board()
-    }
+	@BeforeEach
+	fun setUp() {
+		board = Board()
+	}
 
-    @Test
-    fun testShow() {
-        val expectation = ("" +
-                "........|" +
-                "........|" +
-                "........|" +
-                "..p.....|" +
-                "........|" +
-                "........|" +
-                "....P...|" +
-                "........").replace('|', '\n')
-        board.getFieldAt(2, 3).piece = Pawn(Player.WHITE, board)
-        board.getFieldAt(4, 6).piece = Pawn(Player.BLACK, board)
+	@Test
+	fun testShow() {
+		val expectation = ("" +
+				"........|" +
+				"........|" +
+				"........|" +
+				"..p.....|" +
+				"........|" +
+				"........|" +
+				"....P...|" +
+				"........").replace('|', '\n')
+		board.getFieldAt(2, 3).piece = Pawn(Player.WHITE, board)
+		board.getFieldAt(4, 6).piece = Pawn(Player.BLACK, board)
 
-        assertEquals(expectation, board.show())
-    }
+		assertEquals(expectation, board.show())
+	}
 
-    @Test
-    fun testShowWithMoves() {
-        val expectation = ("" +
-                "....x...|" +
-                "....x...|" +
-                "....x...|" +
-                "..Xxrxxx|" +
-                "....x...|" +
-                "....x...|" +
-                "....p...|" +
-                "........").replace('|', '\n')
+	@Test
+	fun testShowWithMoves() {
+		val expectation = ("" +
+				"....x...|" +
+				"....x...|" +
+				"....x...|" +
+				"..Xxrxxx|" +
+				"....x...|" +
+				"....x...|" +
+				"....p...|" +
+				"........").replace('|', '\n')
 
-        board.setPieceAt(4, 3, Rook(Player.WHITE, board))
-        board.setPieceAt(4, 6, Pawn(Player.WHITE, board))
-        board.setPieceAt(2, 3, Pawn(Player.BLACK, board))
+		board.setPieceAt(4, 3, Rook(Player.WHITE, board))
+		board.setPieceAt(4, 6, Pawn(Player.WHITE, board))
+		board.setPieceAt(2, 3, Pawn(Player.BLACK, board))
 
-        assertEquals(expectation, board.show(board.getPieceAt(4,3)!!.getMoves()))
-    }
+		assertEquals(expectation, board.show(board.getPieceAt(4, 3)!!.getMoves()))
+	}
 
-    @Test
-    fun testLoad() {
-        val pattern = ("" +
-                "RNBQKBNR|" +
-                "PPPPPPPP|" +
-                "........|" +
-                "........|" +
-                "........|" +
-                "........|" +
-                "pppppppp|" +
-                "rnbqkbnr").replace('|', '\n')
+	@Test
+	fun testLoad() {
+		val pattern = ("" +
+				"RNBQKBNR|" +
+				"PPPPPPPP|" +
+				"........|" +
+				"........|" +
+				"........|" +
+				"........|" +
+				"pppppppp|" +
+				"rnbqkbnr").replace('|', '\n')
 
-        board.load(pattern)
+		board.load(pattern)
 
-        assertEquals(pattern, board.show())
-        assertTrue(board.getPieceAt(Coordinates(2, 0))!! is Bishop)
-        assertEquals(Player.BLACK, board.getPieceAt(3, 1)!!.player)
-        assertEquals(Player.WHITE, board.getPieceAt(6, 7)!!.player)
-    }
+		assertEquals(pattern, board.show())
+		assertTrue(board.getPieceAt(Coordinates(2, 0))!! is Bishop)
+		assertEquals(Player.BLACK, board.getPieceAt(3, 1)!!.player)
+		assertEquals(Player.WHITE, board.getPieceAt(6, 7)!!.player)
+	}
 }

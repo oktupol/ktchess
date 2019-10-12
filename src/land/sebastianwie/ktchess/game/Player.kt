@@ -5,8 +5,8 @@ package land.sebastianwie.ktchess.game
  * Black player moves "down", towards positive y.
  */
 enum class Player(val direction: Int, val baseRow: Int) {
-    WHITE(-1, 7),
-    BLACK(1, 0);
+	WHITE(-1, 7),
+	BLACK(1, 0);
 
-    fun opponent() = if (this == BLACK) WHITE else BLACK
+	fun opponent() = if (this == BLACK) WHITE else BLACK
 }
