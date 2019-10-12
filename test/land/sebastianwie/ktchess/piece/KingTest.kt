@@ -8,14 +8,11 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class KingTest {
-    lateinit var board: Board
-    lateinit var king: King
-
+internal class KingTest : AbstractPieceTest<King>() {
     @BeforeEach
     fun setUp() {
         board = Board()
-        king = King(Player.BLACK, board)
+        piece = King(Player.BLACK, board)
     }
 
     @Test
@@ -30,9 +27,9 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 3, king)
+        board.setPieceAt(4, 3, piece)
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -47,9 +44,9 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(7, 0, king)
+        board.setPieceAt(7, 0, piece)
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -64,12 +61,12 @@ internal class KingTest {
                 ".....r..|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 3, king)
-        board.setPieceAt(5, 6, Rook(king.player.opponent(), board))
-        board.setPieceAt(1, 2, Bishop(king.player.opponent(), board))
-        board.setPieceAt(4, 2, Knight(king.player.opponent(), board))
+        board.setPieceAt(4, 3, piece)
+        board.setPieceAt(5, 6, Rook(piece.player.opponent(), board))
+        board.setPieceAt(1, 2, Bishop(piece.player.opponent(), board))
+        board.setPieceAt(4, 2, Knight(piece.player.opponent(), board))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -84,10 +81,10 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        board.setPieceAt(7, 0, Rook(king.player, board))
+        board.setPieceAt(4, 0, piece)
+        board.setPieceAt(7, 0, Rook(piece.player, board))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -102,10 +99,10 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        board.setPieceAt(0, 0, Rook(king.player, board))
+        board.setPieceAt(4, 0, piece)
+        board.setPieceAt(0, 0, Rook(piece.player, board))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -120,11 +117,11 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        board.setPieceAt(0, 0, Rook(king.player, board))
-        board.setPieceAt(7, 0, Rook(king.player, board))
+        board.setPieceAt(4, 0, piece)
+        board.setPieceAt(0, 0, Rook(piece.player, board))
+        board.setPieceAt(7, 0, Rook(piece.player, board))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -139,15 +136,15 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        val kingsideRook = Rook(king.player, board)
-        board.setPieceAt(0, 0, Rook(king.player, board))
+        board.setPieceAt(4, 0, piece)
+        val kingsideRook = Rook(piece.player, board)
+        board.setPieceAt(0, 0, Rook(piece.player, board))
         board.setPieceAt(7, 0, kingsideRook)
 
         kingsideRook.move(Coordinates(7, 1))
         kingsideRook.move(Coordinates(7, 0))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -162,15 +159,15 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        val queensideRook = Rook(king.player, board)
+        board.setPieceAt(4, 0, piece)
+        val queensideRook = Rook(piece.player, board)
         board.setPieceAt(0, 0, queensideRook)
-        board.setPieceAt(7, 0, Rook(king.player, board))
+        board.setPieceAt(7, 0, Rook(piece.player, board))
 
         queensideRook.move(Coordinates(0, 1))
         queensideRook.move(Coordinates(0, 0))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -185,14 +182,14 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        board.setPieceAt(0, 0, Rook(king.player, board))
-        board.setPieceAt(7, 0, Rook(king.player, board))
+        board.setPieceAt(4, 0, piece)
+        board.setPieceAt(0, 0, Rook(piece.player, board))
+        board.setPieceAt(7, 0, Rook(piece.player, board))
 
-        king.move(Coordinates(3, 0))
-        king.move(Coordinates(4, 0))
+        piece.move(Coordinates(3, 0))
+        piece.move(Coordinates(4, 0))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -207,11 +204,11 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        board.setPieceAt(0, 0, Rook(king.player, board))
-        board.setPieceAt(1, 0, Pawn(king.player, board))
+        board.setPieceAt(4, 0, piece)
+        board.setPieceAt(0, 0, Rook(piece.player, board))
+        board.setPieceAt(1, 0, Pawn(piece.player, board))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -226,12 +223,12 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        board.setPieceAt(0, 0, Rook(king.player, board))
-        board.setPieceAt(7, 0, Rook(king.player, board))
-        board.setPieceAt(4, 3, Rook(king.player.opponent(), board))
+        board.setPieceAt(4, 0, piece)
+        board.setPieceAt(0, 0, Rook(piece.player, board))
+        board.setPieceAt(7, 0, Rook(piece.player, board))
+        board.setPieceAt(4, 3, Rook(piece.player.opponent(), board))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 
     @Test
@@ -246,11 +243,11 @@ internal class KingTest {
                 "........|" +
                 "........").replace('|', '\n')
 
-        board.setPieceAt(4, 0, king)
-        board.setPieceAt(0, 0, Rook(king.player, board))
-        board.setPieceAt(7, 0, Rook(king.player, board))
-        board.setPieceAt(3, 3, Rook(king.player.opponent(), board))
+        board.setPieceAt(4, 0, piece)
+        board.setPieceAt(0, 0, Rook(piece.player, board))
+        board.setPieceAt(7, 0, Rook(piece.player, board))
+        board.setPieceAt(3, 3, Rook(piece.player.opponent(), board))
 
-        assertEquals(expectation, board.show(king.getMoves()))
+        assertEquals(expectation, board.show(piece.getMoves()))
     }
 }
