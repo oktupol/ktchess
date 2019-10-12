@@ -170,4 +170,64 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 
         assertEquals(expectation, board.show(piece.getMoves()))
     }
+
+    @Test
+    fun testGetMoves_kingInCheck_mustCapturePiece() {
+        val expectation = ("" +
+                "...K....|" +
+                "....P...|" +
+                "...X....|" +
+                "........|" +
+                "........|" +
+                "...q....|" +
+                "........|" +
+                "........").replace('|', '\n')
+
+        board.setPieceAt(4, 1, piece)
+        board.setPieceAt(3, 0, King(Player.BLACK, board))
+        board.setPieceAt(3, 2, Rook(Player.WHITE, board))
+        board.setPieceAt(3, 5, Queen(Player.WHITE, board))
+
+        assertEquals(expectation, board.show(piece.getMoves()))
+    }
+
+    @Test
+    fun testGetMoves_kingInCheck_mustMoveDouble() {
+        val expectation = ("" +
+                "........|" +
+                "..P.....|" +
+                "...p....|" +
+                "K.x..r..|" +
+                "........|" +
+                "........|" +
+                "........|" +
+                "........").replace('|', '\n')
+
+        board.setPieceAt(2, 1, piece)
+        board.setPieceAt(3, 2, Pawn(Player.WHITE, board))
+        board.setPieceAt(0, 3, King(Player.BLACK, board))
+        board.setPieceAt(5, 3, Rook(Player.WHITE, board))
+
+        assertEquals(expectation, board.show(piece.getMoves()))
+    }
+
+    @Test
+    fun testGetMoves_kingInCheck_cannotMove() {
+        val expectation = ("" +
+                "........|" +
+                "..P.....|" +
+                "...p....|" +
+                "........|" +
+                "........|" +
+                ".K....r.|" +
+                "........|" +
+                "........").replace('|', '\n')
+
+        board.setPieceAt(2, 1, piece)
+        board.setPieceAt(3, 2, Pawn(Player.WHITE, board))
+        board.setPieceAt(1, 5, King(Player.BLACK, board))
+        board.setPieceAt(6, 5, Rook(Player.WHITE, board))
+
+        assertEquals(expectation, board.show(piece.getMoves()))
+    }
 }
