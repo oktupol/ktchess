@@ -3,6 +3,7 @@ package land.sebastianwie.ktchess.game
 import land.sebastianwie.ktchess.board.Board
 import land.sebastianwie.ktchess.board.Coordinates
 import land.sebastianwie.ktchess.piece.*
+import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -24,7 +25,9 @@ class Game(init: Boolean = true) {
 	var isStalemate = false
 		private set
 
-	// todo implement scoreboard, threefold-repetition and fifty-move-rule
+	val history: MutableList<Move>
+
+	// todo implement threefold-repetition
 	// todo handle move flags
 
 	private val homeRowTemplate: Array<KClass<out AbstractPiece>> = arrayOf(
@@ -45,6 +48,8 @@ class Game(init: Boolean = true) {
 			initSecondRow(Player.WHITE)
 			initSecondRow(Player.BLACK)
 		}
+
+		history = LinkedList()
 	}
 
 	private fun initHomeRow(player: Player) {
@@ -63,8 +68,9 @@ class Game(init: Boolean = true) {
 	class Selection internal constructor(val game: Game, val piece: Piece) {
 		fun getMoves(): Set<Move> = piece.getMoves()
 		fun moveTo(coordinates: Coordinates) {
-			piece.move(coordinates)
+			val move = piece.move(coordinates)
 
+			game.history.add(move)
 			// todo event system
 
 			game.endTurn()
@@ -79,13 +85,48 @@ class Game(init: Boolean = true) {
 		return Selection(this, piece)
 	}
 
-	internal fun endTurn() {
-		currentPlayer = currentPlayer.opponent()
+	fun fiftyMoveRulePossible(): Boolean {
+		if (history.size < 50) return false
 
-		isCheck = board.isCheck(currentPlayer)
-		isCheckmate = board.isCheckmate(currentPlayer)
-		isStalemate = board.isStalemate(currentPlayer)
+		val iterator = history.listIterator(history.size)
+		var i = 0
 
-		gameRunning = !isCheckmate && !isStalemate
+		while (iterator.hasPrevious() && i < 50) {
+			val move = iterator.previous()
+
+			if (move.capturedPiece != null) return false
+			if (move.piece is Pawn) return false
+
+			i++
+		}
+
+		return true
+	}
+
+	fun claimFiftyMoveRule() {
+		require(fiftyMoveRulePossible()) { "Cannot claim fifty move rule right now" }
+
+		gameRunning = false
+		endTurn()
+	}
+
+	data class GameResult internal constructor(val winner: Player?, val draw: Boolean = false)
+
+	internal fun endTurn(): GameResult? {
+		if (gameRunning) {
+			currentPlayer = currentPlayer.opponent()
+			isCheck = board.isCheck(currentPlayer)
+			isCheckmate = board.isCheckmate(currentPlayer)
+			isStalemate = board.isStalemate(currentPlayer)
+
+			gameRunning = !isCheckmate && !isStalemate
+
+			if (isCheckmate) return GameResult(currentPlayer.opponent())
+			if (isStalemate) return GameResult(null, true)
+		} else {
+			return GameResult(null, true)
+		}
+
+		return null
 	}
 }

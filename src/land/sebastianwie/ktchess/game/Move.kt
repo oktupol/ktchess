@@ -9,6 +9,8 @@ data class Move(
 	val capturedPiece: Piece? = null,
 	val flags: Map<String, Boolean> = HashMap()
 ) {
+	val initialCoordinates: Coordinates = piece.coordinates
+
 	constructor(piece: Piece, coordinates: Coordinates, capturedPiece: Piece?, vararg flags: String) : this(
 		piece,
 		coordinates,

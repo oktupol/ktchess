@@ -37,7 +37,6 @@ abstract class AbstractPiece(override val player: Player, override val board: Bo
 		require(move.piece == this)
 
 		if (move.capturedPiece != null) {
-			// TODO add captured piece to score board
 			board.deletePiece(move.capturedPiece)
 		}
 
