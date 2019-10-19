@@ -62,8 +62,7 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 			"........|" +
 			"........").replace('|', '\n')
 
-		board.setPieceAt(2, 1, piece)
-		piece.move(Coordinates(2, 2))
+		board.setPieceAt(2, 2, piece)
 
 		assertEquals(expectation, board.show(piece.getMoves()))
 	}
@@ -80,9 +79,8 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 			"........|" +
 			"........").replace('|', '\n')
 
-		board.setPieceAt(2, 1, piece)
+		board.setPieceAt(2, 2, piece)
 		board.setPieceAt(2, 3, Pawn(Player.WHITE, board))
-		piece.move(Coordinates(2, 2))
 
 		assertEquals(expectation, board.show(piece.getMoves()))
 	}
@@ -117,8 +115,7 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 			"........|" +
 			"........").replace('|', '\n')
 
-		board.setPieceAt(3, 3, piece)
-		piece.move(Coordinates(3, 4))
+		board.setPieceAt(3, 4, piece)
 
 		board.setPieceAt(4, 4, Pawn(Player.WHITE, board))
 
@@ -137,8 +134,7 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 			"........|" +
 			"........").replace('|', '\n')
 
-		board.setPieceAt(3, 3, piece)
-		piece.move(Coordinates(3, 4))
+		board.setPieceAt(3, 4, piece)
 
 		val opponentPawn = Pawn(Player.WHITE, board)
 		board.setPieceAt(4, 6, opponentPawn)
@@ -159,12 +155,11 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 			"........|" +
 			"........").replace('|', '\n')
 
-		board.setPieceAt(3, 2, piece)
+		board.setPieceAt(3, 3, piece)
 		val opponentPawn = Pawn(Player.WHITE, board)
 		board.setPieceAt(4, 6, opponentPawn)
 
 		opponentPawn.move(Coordinates(4, 4))
-		piece.move(Coordinates(3, 3))
 		opponentPawn.move(Coordinates(4, 3))
 
 

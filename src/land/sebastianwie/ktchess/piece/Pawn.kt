@@ -6,7 +6,6 @@ import land.sebastianwie.ktchess.game.Move
 import land.sebastianwie.ktchess.game.Player
 
 class Pawn(player: Player, board: Board) : AbstractPiece(player, board) {
-	private var moved = false
 	private var justMovedDouble = false
 
 	companion object Flags {
@@ -24,9 +23,9 @@ class Pawn(player: Player, board: Board) : AbstractPiece(player, board) {
 	}
 
 	private fun addStraightMoves(moves: MutableSet<Move>) {
-		val maxDistance = when (moved) {
-			false -> 2
-			true -> 1
+		val maxDistance = when (coordinates.y) {
+			player.baseRow + player.direction -> 2
+			else -> 1
 		}
 
 		for (distance in 1..maxDistance) {
@@ -84,7 +83,6 @@ class Pawn(player: Player, board: Board) : AbstractPiece(player, board) {
 		val move = super.move(coordinates)
 
 		justMovedDouble = move.has(MOVED_DOUBLE)
-		moved = true
 
 		// todo promotion
 
