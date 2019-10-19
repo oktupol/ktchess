@@ -7,6 +7,7 @@ import land.sebastianwie.ktchess.testutils.show
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import kotlin.test.assertFailsWith
 
 internal class PawnTest : AbstractPieceTest<Pawn>() {
 	@BeforeEach
@@ -144,6 +145,29 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 	}
 
 	@Test
+	fun testDoEnPassantCapture() {
+		val expectation = ("" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"....P...|" + // en passant move - the white pawn would be captured
+			"........|" +
+			"........").replace('|', '\n')
+
+		board.setPieceAt(3, 4, piece)
+
+		val opponentPawn = Pawn(Player.WHITE, board)
+		board.setPieceAt(4, 6, opponentPawn)
+		opponentPawn.move(Coordinates(4, 4))
+
+		piece.move(Coordinates(4, 5))
+
+		assertEquals(expectation, board.show())
+	}
+
+	@Test
 	fun testGetMoves_nextToOpponentPawnThatMovedDoubleMoreThanOneMoveAgo() {
 		val expectation = ("" +
 			"........|" +
@@ -224,5 +248,33 @@ internal class PawnTest : AbstractPieceTest<Pawn>() {
 		board.setPieceAt(6, 5, Rook(Player.WHITE, board))
 
 		assertEquals(expectation, board.show(piece.getMoves()))
+	}
+
+	@Test
+	fun testPromote_promotionIllegal() {
+		board.setPieceAt(2, 1, piece)
+
+		assertFailsWith(IllegalArgumentException::class) {
+			piece.promoteTo(Queen::class)
+		}
+	}
+
+	@Test
+	fun testPromote_promotionLegal() {
+		val expectation = ("" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"..Q.....").replace('|', '\n')
+
+		board.setPieceAt(2, 7, piece)
+
+		piece.promoteTo(Queen::class)
+
+		assertEquals(expectation, board.show())
 	}
 }

@@ -5,7 +5,7 @@ import land.sebastianwie.ktchess.board.Coordinates
 import land.sebastianwie.ktchess.game.Move
 import land.sebastianwie.ktchess.game.Player
 
-class Rook(player: Player, board: Board) : SimpleMovesPiece(player, board) {
+class Rook(player: Player, board: Board) : SimpleMovesPiece(player, board), PromotionOptionPiece {
 	override val canMoveDiagonally = false
 	override val canMoveOrthogonally = true
 

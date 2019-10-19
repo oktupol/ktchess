@@ -25,6 +25,7 @@ class Game(init: Boolean = true) {
 		private set
 
 	// todo implement scoreboard, threefold-repetition and fifty-move-rule
+	// todo handle move flags
 
 	private val homeRowTemplate: Array<KClass<out AbstractPiece>> = arrayOf(
 		Rook::class,
@@ -59,10 +60,14 @@ class Game(init: Boolean = true) {
 		}
 	}
 
-	class Selection internal constructor(val piece: Piece) {
+	class Selection internal constructor(val game: Game, val piece: Piece) {
 		fun getMoves(): Set<Move> = piece.getMoves()
 		fun moveTo(coordinates: Coordinates) {
 			piece.move(coordinates)
+
+			// todo event system
+
+			game.endTurn()
 		}
 	}
 
@@ -71,10 +76,10 @@ class Game(init: Boolean = true) {
 		requireNotNull(piece) { "No piece selected" }
 		require(piece.player == currentPlayer) { "Opponent piece selected" }
 
-		return Selection(piece)
+		return Selection(this, piece)
 	}
 
-	fun endTurn() {
+	internal fun endTurn() {
 		currentPlayer = currentPlayer.opponent()
 
 		isCheck = board.isCheck(currentPlayer)

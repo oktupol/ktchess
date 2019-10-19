@@ -4,6 +4,8 @@ import land.sebastianwie.ktchess.board.Board
 import land.sebastianwie.ktchess.board.Coordinates
 import land.sebastianwie.ktchess.game.Move
 import land.sebastianwie.ktchess.game.Player
+import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
 class Pawn(player: Player, board: Board) : AbstractPiece(player, board) {
 	private var justMovedDouble = false
@@ -87,5 +89,15 @@ class Pawn(player: Player, board: Board) : AbstractPiece(player, board) {
 		// todo promotion
 
 		return move
+	}
+
+	fun promoteTo(pieceClass: KClass<out PromotionOptionPiece>): AbstractPiece {
+		require(coordinates.y == player.opponent().baseRow) { "Pawn must have reached the opponent's base row." }
+
+		val piece = pieceClass.primaryConstructor!!.call(player, board)
+
+		board.setPieceAt(coordinates, piece)
+
+		return piece as AbstractPiece
 	}
 }

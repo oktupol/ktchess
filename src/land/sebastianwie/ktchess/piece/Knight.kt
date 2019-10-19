@@ -5,7 +5,7 @@ import land.sebastianwie.ktchess.board.Coordinates
 import land.sebastianwie.ktchess.game.Move
 import land.sebastianwie.ktchess.game.Player
 
-class Knight(player: Player, board: Board) : AbstractPiece(player, board) {
+class Knight(player: Player, board: Board) : AbstractPiece(player, board), PromotionOptionPiece {
 	override fun getMovesWithoutCheckTests(): MutableSet<Move> {
 		val moves = HashSet<Move>()
 

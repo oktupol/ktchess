@@ -250,4 +250,44 @@ internal class KingTest : AbstractPieceTest<King>() {
 
 		assertEquals(expectation, board.show(piece.getMoves()))
 	}
+
+	@Test
+	fun testDoQueensideCastle() {
+		val expectation = ("" +
+			"..KR....|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
+
+		board.setPieceAt(4, 0, piece)
+		board.setPieceAt(0, 0, Rook(piece.player, board))
+
+		piece.move(Coordinates(2, 0))
+
+		assertEquals(expectation, board.show())
+	}
+
+	@Test
+	fun testDoKingsideCastle() {
+		val expectation = ("" +
+			".....RK.|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........|" +
+			"........").replace('|', '\n')
+
+		board.setPieceAt(4, 0, piece)
+		board.setPieceAt(7, 0, Rook(piece.player, board))
+
+		piece.move(Coordinates(6, 0))
+
+		assertEquals(expectation, board.show())
+	}
 }
