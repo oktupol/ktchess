@@ -128,4 +128,19 @@ class Board {
 			opponentInCheck = clone.isCheck(move.piece.player.opponent())
 		)
 	}
+
+	override fun hashCode(): Int {
+		return fields.hashCode()
+	}
+
+	override fun equals(other: Any?): Boolean {
+		if (this === other) return true
+		if (javaClass != other?.javaClass) return false
+
+		other as Board
+
+		if (!fields.contentDeepEquals(other.fields)) return false
+
+		return true
+	}
 }

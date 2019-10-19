@@ -3,7 +3,7 @@ package land.sebastianwie.ktchess.game
 import land.sebastianwie.ktchess.board.Board
 import land.sebastianwie.ktchess.board.Coordinates
 import land.sebastianwie.ktchess.piece.*
-import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
@@ -27,7 +27,8 @@ class Game(init: Boolean = true) {
 
 	val history: MutableList<Move>
 
-	// todo implement threefold-repetition
+	val boardHashes: MutableMap<Int, Int>
+
 	// todo handle move flags
 
 	private val homeRowTemplate: Array<KClass<out AbstractPiece>> = arrayOf(
@@ -49,7 +50,8 @@ class Game(init: Boolean = true) {
 			initSecondRow(Player.BLACK)
 		}
 
-		history = LinkedList()
+		history = ArrayList()
+		boardHashes = HashMap()
 	}
 
 	private fun initHomeRow(player: Player) {
@@ -65,12 +67,15 @@ class Game(init: Boolean = true) {
 		}
 	}
 
-	class Selection internal constructor(val game: Game, val piece: Piece) {
+	class Selection internal constructor(val moveNumber: Int, val game: Game, val piece: Piece) {
 		fun getMoves(): Set<Move> = piece.getMoves()
 		fun moveTo(coordinates: Coordinates) {
+			require(moveNumber == game.history.size) { "This move is no longer valid" }
+
 			val move = piece.move(coordinates)
 
 			game.history.add(move)
+			game.boardHashes[game.board.hashCode()] = game.boardHashes.getOrDefault(game.board.hashCode(), 0) + 1
 			// todo event system
 
 			game.endTurn()
@@ -78,14 +83,17 @@ class Game(init: Boolean = true) {
 	}
 
 	fun select(coordinates: Coordinates): Selection {
+		require(gameRunning) { "The game has to be running" }
+
 		val piece = board.getPieceAt(coordinates)
 		requireNotNull(piece) { "No piece selected" }
 		require(piece.player == currentPlayer) { "Opponent piece selected" }
 
-		return Selection(this, piece)
+		return Selection(history.size, this, piece)
 	}
 
 	fun fiftyMoveRulePossible(): Boolean {
+		if (!gameRunning) return false
 		if (history.size < 50) return false
 
 		val iterator = history.listIterator(history.size)
@@ -110,11 +118,37 @@ class Game(init: Boolean = true) {
 		endTurn()
 	}
 
+	fun threefoldRepetitionPossible(): Boolean {
+		if (!gameRunning) return false
+
+		for (occurrences in boardHashes) {
+			if (occurrences.value >= 3) return true
+		}
+
+		return false
+	}
+
+	fun claimThreefoldRepetition() {
+		require(threefoldRepetitionPossible()) { "Cannot claim threefold repetition right now" }
+
+		gameRunning = false
+		endTurn()
+	}
+
+	fun surrender() {
+		require(gameRunning) { "The game has to be running" }
+		endTurn(true)
+	}
+
 	data class GameResult internal constructor(val winner: Player?, val draw: Boolean = false)
 
-	internal fun endTurn(): GameResult? {
-		if (gameRunning) {
-			currentPlayer = currentPlayer.opponent()
+	internal fun endTurn(surrender: Boolean = false): GameResult? {
+		currentPlayer = currentPlayer.opponent()
+
+		if (surrender) {
+			gameRunning = false
+			return (GameResult(currentPlayer))
+		} else if (gameRunning) {
 			isCheck = board.isCheck(currentPlayer)
 			isCheckmate = board.isCheckmate(currentPlayer)
 			isStalemate = board.isStalemate(currentPlayer)

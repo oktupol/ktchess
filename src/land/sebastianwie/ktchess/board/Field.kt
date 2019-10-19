@@ -2,6 +2,7 @@ package land.sebastianwie.ktchess.board
 
 import land.sebastianwie.ktchess.game.Player
 import land.sebastianwie.ktchess.piece.Piece
+import java.util.*
 
 class Field(val coordinates: Coordinates, private val board: Board) {
 	var piece: Piece? = null
@@ -22,4 +23,20 @@ class Field(val coordinates: Coordinates, private val board: Board) {
 
 	fun isBaseRow(player: Player) = player.baseRow == coordinates.y
 	fun isLastRow(player: Player) = player.opponent().baseRow == coordinates.y
+
+	override fun hashCode(): Int {
+		return Objects.hash(coordinates, piece)
+	}
+
+	override fun equals(other: Any?): Boolean {
+		if (this === other) return true
+		if (javaClass != other?.javaClass) return false
+
+		other as Field
+
+		if (coordinates != other.coordinates) return false
+		if (piece != other.piece) return false
+
+		return true
+	}
 }
